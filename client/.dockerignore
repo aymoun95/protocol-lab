@@ -1,0 +1,12 @@
+node_modules
+dist
+.gitignore
+README.md
+Dockerfile
+pnpm-debug.log
+.DS_Store
+.git
+.vscode
+.env
+.env.local
+.env.*.local
