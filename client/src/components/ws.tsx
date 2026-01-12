@@ -1,6 +1,7 @@
 import { Send, Wifi, WifiOff, Zap } from "lucide-react";
 import { useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { API_BASE_URL } from "../config";
 import {
   ActionButton,
   LogContainer,
@@ -9,8 +10,6 @@ import {
   ProtocolHeader,
   StatusBadge,
 } from "./common";
-
-import { WS_URL } from "../config";
 
 export function ChatSocketIO() {
   const socketRef = useRef<Socket | null>(null);
@@ -23,7 +22,7 @@ export function ChatSocketIO() {
 
   function connect() {
     if (connected) return;
-    socketRef.current = io(WS_URL);
+    socketRef.current = io(API_BASE_URL);
 
     socketRef.current.on("connect", () => setConnected(true));
     socketRef.current.on("disconnect", () => setConnected(false));

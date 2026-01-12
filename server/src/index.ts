@@ -1,12 +1,12 @@
 import cors from "cors";
 import express from "express";
 import { createServer } from "http";
-import { setupWebSocket } from "./ws";
 
 import longPolling from "./routes/long-polling";
 import shortPolling from "./routes/short-polling";
 import sse from "./routes/sse";
 import webhook from "./routes/webhook";
+import { setupWebSocket } from "./routes/ws";
 
 const app = express();
 app.use(cors());
