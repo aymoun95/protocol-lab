@@ -1,5 +1,5 @@
 import { Send, Wifi, WifiOff, Zap } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { API_BASE_URL } from "../config";
 import {
@@ -15,10 +15,20 @@ export function ChatSocketIO() {
   const socketRef = useRef<Socket | null>(null);
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState<
-    { msg: string; timestamp: string; id: number }[]
+    { msg: string; timestamp: string; id: string }[]
   >([]);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.off();
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+    };
+  }, []);
 
   function connect() {
     if (connected) return;
@@ -28,10 +38,17 @@ export function ChatSocketIO() {
     socketRef.current.on("disconnect", () => setConnected(false));
 
     socketRef.current.on("chat message", (msg: string) => {
-      setMessages((m) => [
-        ...m,
-        { msg, timestamp: new Date().toLocaleTimeString(), id: Math.random() },
-      ]);
+      setMessages((m) => {
+        const next = [
+          ...m,
+          {
+            msg,
+            timestamp: new Date().toLocaleTimeString(),
+            id: crypto.randomUUID(),
+          },
+        ];
+        return next.slice(-200);
+      });
     });
   }
 
@@ -55,7 +72,7 @@ export function ChatSocketIO() {
         icon={Zap}
         iconColor="bg-purple-500/20 text-purple-500"
         title="WebSockets"
-        description="Bi-directional, Real-time"
+        description="Bi-directional"
         statusBadge={
           <StatusBadge
             icon={connected ? Wifi : WifiOff}

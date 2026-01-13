@@ -23,7 +23,7 @@ function App() {
         </div>
 
         <a
-          href="https://github.com"
+          href="https://github.com/aymoun95/protocol-lab"
           target="_blank"
           rel="noreferrer"
           className="p-2 hover:bg-slate-800 rounded-full transition-colors"

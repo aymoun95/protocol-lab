@@ -48,7 +48,7 @@ export function SSE() {
         icon={Radio}
         iconColor="bg-blue-500/20 text-blue-500"
         title="SSE"
-        description="Server-Sent Events"
+        description="Uni-directional"
         statusBadge={
           <StatusBadge
             icon={connected ? Wifi : Activity}
