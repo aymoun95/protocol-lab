@@ -25,7 +25,7 @@ app.use("/long-poll", longPolling);
 app.use("/sse", sse);
 app.use("/webhook", webhook);
 
-app.all("(.*)", (req, res) => {
+app.use((req, res) => {
   res.redirect("/health");
 });
 
