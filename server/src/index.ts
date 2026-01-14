@@ -12,6 +12,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/short-poll", shortPolling);
 app.use("/long-poll", longPolling);
 app.use("/sse", sse);
@@ -19,10 +27,9 @@ app.use("/webhook", webhook);
 
 const httpServer = createServer(app);
 
-// Unify HTTP and WebSocket on the same server/port
 setupWebSocket(httpServer);
 
 const PORT = 3000;
 httpServer.listen(PORT, () => {
-  console.log(`Unified server running on http://localhost:${PORT}`);
+  console.log(`Unified server running on PORT: ${PORT}`);
 });

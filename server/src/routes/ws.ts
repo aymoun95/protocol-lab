@@ -10,7 +10,7 @@ export function setupWebSocket(httpServer: HTTPServer) {
     console.log("User connected:", socket.id);
 
     socket.on("chat message", (msg) => {
-      io.emit("chat message", msg); // broadcast to everyone
+      io.emit("chat message", msg);
     });
 
     socket.on("disconnect", () => {
